@@ -1,4 +1,4 @@
-<!-- Repository Class -->
+<!-- 사용자 리포지토리 클래스 -->
 
 <?php
     class UserRepo {
@@ -10,18 +10,7 @@
             $this->tableName = 'user';
         }
 
-        public function getUsers() {
-            $query = "SELECT * FROM $this->tableName";
-            $result = mysqli_query($this->connection, $query);
-
-            $users = [];
-            while ($row = mysqli_fetch_array($result)) {
-                array_push($users, $row);
-            }
-
-            return $users;
-        }
-
+        # 사용자 아이디로 사용자 불러오기.
         public function getUserById($id) {
             $query = "SELECT * FROM $this->tableName WHERE id = '$id'";
             $result = mysqli_query($this->connection, $query);
@@ -31,18 +20,7 @@
             return $user;
         }
 
-        public function getUserInfoByIdUniq($idUniq) {
-            $query = "SELECT * FROM $this->tableName WHERE id_uniq = $idUniq";
-            $result = mysqli_query($this->connection, $query);
-
-            $user = [];
-            while ($row = mysqli_fetch_array($result)) {
-                array_push($user, $row);
-            }
-
-            return $user[0];
-        }
-
+        # 사용자 추가.
         public function addUser($userName, $passwd) {
             $query = "SELECT * FROM $this->tableName WHERE id = '$userName'";
             $result = mysqli_query($this->connection, $query);
