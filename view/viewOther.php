@@ -10,6 +10,7 @@
 			# 필요 파일 가져오기.
 
 			include '../util/LogUtil.php';
+			include '../util/TextUtil.php';
 
 			include '../model/repo/TaskRepo.php';
 			include '../model/repo/UserRepo.php';
@@ -40,7 +41,7 @@
             }
 
 			# 조회할 사용자 이름 및 돌아가기 버튼 표시.
-			echo '<h1>' . $other['id'].'</h1>';
+			echo '<h1>'.TextUtil::asPlainText($other['id']).'</h1>';
             echo '
                 <form action="index.php" method="post">
                 <input type="submit" value="Return" name="return">
@@ -54,8 +55,7 @@
 				if ($row['is_done']) {
 					echo "[완료] ";
 				}
-				$taskStr = htmlspecialchars($row['task'], ENT_QUOTES);
-				echo $taskStr."<br>";
+				echo TextUtil::asPlainText($row['task'])."<br>";
 			}
 		?>
 	</body>

@@ -10,6 +10,7 @@
 			# 필요 파일 가져오기.
 
 			include '../util/LogUtil.php';
+			include '../util/TextUtil.php';
 
 			include '../model/repo/TaskRepo.php';
 			include '../model/repo/UserRepo.php';
@@ -70,7 +71,7 @@
 			}
 
 			# 로그아웃 및 다른 사용자의 할 일 목록 조회 버튼을 표시.
-			echo '<h1>' . $user['id'].'</h1>';
+			echo '<h1>'.TextUtil::asPlainText($user['id']).'</h1>';
 			echo '
 				<form name="menu" method="post" action="index.php">
 					<input type="submit" value="로그아웃" name="logOut" /> <br />
@@ -99,8 +100,7 @@
 				if ($row['is_done']) {
 					echo "[완료] ";
 				}
-				$taskStr = htmlspecialchars($row['task'], ENT_QUOTES);
-				echo $taskStr."<br>";
+				echo TextUtil::asPlainText($row['task'])."<br>";
 			}
 		?>
 	</body>
