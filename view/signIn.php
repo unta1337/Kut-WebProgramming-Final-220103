@@ -55,6 +55,28 @@
 				LogUtil::alert('가입되었습니다.');
 			}
 
+			# 탈퇴하기.
+			if (isset($_POST['leave'])) {
+				# 사용자 검사.
+				$user = $userRepo->getUserById($_POST['id']);
+
+				# 사용자가 없거나 아이디 또는 비밀번호를 입력하지 않았으면 아무 것도 하지 않음.
+				if (!$user || !$_POST['id'] || !$_POST['passwd']) {
+					header('Location: signIn.php');
+					return;
+				}
+
+				# 비밀번호가 일치하지 않으면 아무 것도 하지 않음.
+				if ($user['passwd'] != $_POST['passwd']) {
+					header('Location: signIn.php');
+					return;
+				}
+
+				# 사용자 삭제 및 확인 메시지 출력.
+				$userRepo->deleteUser($_POST['id'], $_POST['passwd']);
+				LogUtil::alert('탈퇴되었습니다.');
+			}
+
 			# 사용자 정보 입력 폼.
 			echo "
 				<form name='signIn' method='post' action='signIn.php'>
@@ -62,6 +84,7 @@
 					<input type='password' name='passwd' /> <br>
 					<input type='submit' name='signIn' value='로그인' />
 					<input type='submit' name='signUp' value='가입하기' />
+					<input type='submit' name='leave' value='탈퇴하기' />
 				</form>
 			";
         ?>

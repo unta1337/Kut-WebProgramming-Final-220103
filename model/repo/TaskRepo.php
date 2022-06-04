@@ -50,6 +50,8 @@
 
             $stmt->bind_param('ss', $task, $author_id_uniq);
             $stmt->execute();
+
+            return true;
         }
 
         # 할 일 삭제.
@@ -59,6 +61,8 @@
 
             $stmt->bind_param('i', $id);
             $stmt->execute();
+
+            return true;
         }
 
         # 완료로 표시.
@@ -71,6 +75,8 @@
 
             $stmt->bind_param('i', $id);
             $stmt->execute();
+
+            return true;
         }
     }
 ?>

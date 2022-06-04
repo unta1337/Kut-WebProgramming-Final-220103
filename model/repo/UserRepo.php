@@ -44,8 +44,17 @@
 
             $stmt->bind_param('ss', $userName, $passwd);
             $stmt->execute();
-            
-            $result = $stmt->get_result();
+
+            return true;
+        }
+
+        # 사용자 삭제.
+        public function deleteUser($userName) {
+            $query = "DELETE FROM $this->tableName WHERE id = ?";
+            $stmt = $this->connection->prepare($query);
+
+            $stmt->bind_param('s', $userName);
+            $stmt->execute();
 
             return true;
         }
