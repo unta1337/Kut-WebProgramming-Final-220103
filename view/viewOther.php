@@ -54,7 +54,8 @@
 				if ($row['is_done']) {
 					echo "[완료] ";
 				}
-				echo $row['task']."<br>";
+				$taskStr = htmlspecialchars($row['task'], ENT_QUOTES);
+				echo $taskStr."<br>";
 			}
 		?>
 	</body>

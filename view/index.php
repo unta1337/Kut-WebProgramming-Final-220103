@@ -95,10 +95,12 @@
 				echo "<a href='index.php?flipDone=".$row['task_id']."'>[O]</a>";
 				echo " ";
 
+
 				if ($row['is_done']) {
 					echo "[완료] ";
 				}
-				echo $row['task']."<br>";
+				$taskStr = htmlspecialchars($row['task'], ENT_QUOTES);
+				echo $taskStr."<br>";
 			}
 		?>
 	</body>
