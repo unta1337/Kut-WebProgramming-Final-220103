@@ -12,8 +12,13 @@
 
         # 고유 번호로 할 일 불러오기.
         public function getTaskById($id) {
-            $query = "SELECT * FROM $this->tableName WHERE id = '$id'";
-            $result = mysqli_query($this->connection, $query);
+            $query = "SELECT * FROM $this->tableName WHERE id = ?";
+            $stmt = $this->connection->prepare($query);
+
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+
+            $result = $stmt->get_result();
 
             $task = mysqli_fetch_array($result);
 
@@ -22,8 +27,13 @@
 
         # 사용자 아이디로 할 일 불러오기.
         public function getTasksByAuthor($author) {
-            $query = "SELECT task.id AS task_id, task, user.id AS author, user.id_uniq AS author_id_uniq, is_done FROM task JOIN user ON task.author_id_uniq = user.id_uniq WHERE user.id = '$author'";
-            $result = mysqli_query($this->connection, $query);
+            $query = "SELECT task.id AS task_id, task, user.id AS author, user.id_uniq AS author_id_uniq, is_done FROM task JOIN user ON task.author_id_uniq = user.id_uniq WHERE user.id = ?";
+            $stmt = $this->connection->prepare($query);
+
+            $stmt->bind_param('s', $author);
+            $stmt->execute();
+
+            $result = $stmt->get_result();
 
             $tasks = [];
             while ($row = mysqli_fetch_array($result)) {
@@ -35,14 +45,20 @@
 
         # 할 일 추가.
         public function addTask($task, $author_id_uniq) {
-            $query = "INSERT INTO $this->tableName (task, author_id_uniq) VALUES ('$task', '$author_id_uniq')";
-            mysqli_query($this->connection, $query);
+            $query = "INSERT INTO $this->tableName (task, author_id_uniq) VALUES (?, ?)";
+            $stmt = $this->connection->prepare($query);
+
+            $stmt->bind_param('ss', $task, $author_id_uniq);
+            $stmt->execute();
         }
 
         # 할 일 삭제.
         public function deleteTask($id) {
-            $query = "DELETE FROM $this->tableName WHERE id = $id";
-            mysqli_query($this->connection, $query);
+            $query = "DELETE FROM $this->tableName WHERE id = ?";
+            $stmt = $this->connection->prepare($query);
+
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
         }
 
         # 완료로 표시.
@@ -50,8 +66,11 @@
             $task = $this->getTaskById($id);
             $newIsDone = $task['is_done'] ? 0 : 1;
 
-            $query = "UPDATE $this->tableName SET is_done = $newIsDone WHERE id = $id";
-            mysqli_query($this->connection, $query);
+            $query = "UPDATE $this->tableName SET is_done = $newIsDone WHERE id = ?";
+            $stmt = $this->connection->prepare($query);
+
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
         }
     }
 ?>

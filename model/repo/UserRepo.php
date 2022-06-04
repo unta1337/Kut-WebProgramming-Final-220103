@@ -12,8 +12,13 @@
 
         # 사용자 아이디로 사용자 불러오기.
         public function getUserById($id) {
-            $query = "SELECT * FROM $this->tableName WHERE id = '$id'";
-            $result = mysqli_query($this->connection, $query);
+            $query = "SELECT * FROM $this->tableName WHERE id = ?";
+            $stmt = $this->connection->prepare($query);
+
+            $stmt->bind_param('s', $id);
+            $stmt->execute();
+
+            $result = $stmt->get_result();
 
             $user = mysqli_fetch_array($result);
 
@@ -22,15 +27,25 @@
 
         # 사용자 추가.
         public function addUser($userName, $passwd) {
-            $query = "SELECT * FROM $this->tableName WHERE id = '$userName'";
-            $result = mysqli_query($this->connection, $query);
+            $query = "SELECT * FROM $this->tableName WHERE id = ?";
+            $stmt = $this->connection->prepare($query);
+
+            $stmt->bind_param('s', $userName);
+            $stmt->execute();
+
+            $result = $stmt->get_result();
 
             if (mysqli_num_rows($result) > 0) {
                 return false;
             }
 
-            $query = "INSERT INTO $this->tableName (id, passwd) VALUES ('$userName', '$passwd')";
-            $result = mysqli_query($this->connection, $query);
+            $query = "INSERT INTO $this->tableName (id, passwd) VALUES (?, ?)";
+            $stmt = $this->connection->prepare($query);
+
+            $stmt->bind_param('ss', $userName, $passwd);
+            $stmt->execute();
+            
+            $result = $stmt->get_result();
 
             return true;
         }
