@@ -51,6 +51,9 @@
 			$result = $taskRepo->getTasksByAuthor($other['id']);
 			echo "<br>";
 			foreach ($result as $row) {
+				if ($row['is_done']) {
+					echo "[완료] ";
+				}
 				echo $row['task']."<br>";
 			}
 		?>

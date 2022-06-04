@@ -32,25 +32,31 @@
 
 			$user = $_SESSION['user'];
 
-			// 할 일 추가.
+			# 할 일 추가.
 			if (isset($_POST['addTask'])) {
 				$taskRepo->addTask($_POST['content'], $user['id_uniq']);
 			}
 
-			// 할 일 삭제.
+			# 할 일 삭제.
 			if (isset($_GET['deleteTask'])) {
 				$taskRepo->deleteTask($_GET['deleteTask']);
 				header('Location: index.php');
 			}
 
-			// 로그아웃.
+			# 완료로 표시.
+			if (isset($_GET['flipDone'])) {
+				$taskRepo->flipDone($_GET['flipDone']);
+				header('Location: index.php');
+			}
+
+			# 로그아웃.
 			if (isset($_POST['logOut'])) {
 				# 세선을 종료하고 로그인 화면으로 돌아가기.
 				unset($_SESSION);
 				header('Location: signIn.php');
 			}
 
-			// 다른 사용자의 할 일 목록 조회.
+			# 다른 사용자의 할 일 목록 조회.
 			if (isset($_POST['viewOther'])) {
 				$other = $userRepo->getUserById($_POST['otherUser']);
 
@@ -59,9 +65,7 @@
 					return;
 				}
 
-				LogUtil::alert($other['id']);
 				$_SESSION['other'] = $other;
-
 				header('Location: viewOther.php');
 			}
 
@@ -88,7 +92,13 @@
 			echo "<br>";
 			foreach ($result as $row) {
 				echo "<a href='index.php?deleteTask=".$row['task_id']."'>[X]</a>";
-				echo " ".$row['task']."<br>";
+				echo "<a href='index.php?flipDone=".$row['task_id']."'>[O]</a>";
+				echo " ";
+
+				if ($row['is_done']) {
+					echo "[완료] ";
+				}
+				echo $row['task']."<br>";
 			}
 		?>
 	</body>

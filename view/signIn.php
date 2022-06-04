@@ -23,7 +23,7 @@
 
 			$userRepo = new UserRepo($connection);
 
-			// 로그인.
+			# 로그인.
 			if (isset($_POST['signIn'])) {
 				# userRepo에서 사용자 정보를 가져오기.
 				$user = $userRepo->getUserById($_POST['id']);
@@ -39,7 +39,7 @@
 				header('Location: index.php');
 			}
 
-			// 가입.
+			# 가입.
 			if (isset($_POST['signUp'])) {
 				# 사용자 중복 검사.
 				$user = $userRepo->getUserById($_POST['id']);
