@@ -63,7 +63,7 @@
 						<div class="card-body p-5 text-center">
 
 							<form name="logOut" action="index.php" method="post">
-								<h1 class="text-center my-3 pb-3"><?= $user['id'] ?>
+								<h1 class="text-center my-3 pb-3"><?= TextUtil::asPlainText($user['id']) ?>
 									<div class="form-outline">
 										<button type="submit" name="return" class="btn btn-outline-primary">돌아가기</button> <br>
 									</div>
