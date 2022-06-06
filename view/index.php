@@ -8,6 +8,7 @@
     </meta>
 	<title>할 일</title>
     <link rel="icon" href="../asset/favicon.ico" />
+    <link rel="stylesheet" href="../asset/stylesheet.css" />
 
 	<!-- Font Awesome -->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
@@ -93,7 +94,7 @@
 						<div class="card-body p-5 text-center">
 
 							<form name="logOut" action="index.php" method="post">
-								<h1 class="text-center my-3 pb-3"><?= TextUtil::asPlainText($user['id']) ?>
+								<h1 class="text-center my-3 pb-3 break-word"><?= TextUtil::asPlainText($user['id']) ?>
 									<div class="form-outline">
 										<button type="submit" name="logOut" class="btn btn-outline-primary">로그아웃</button> <br>
 									</div>
@@ -142,7 +143,7 @@
 								?>
 									<tbody>
 										<tr>
-											<td><?= TextUtil::asPlainText($row['task']) ?></td>
+											<td class="break-word"><?= TextUtil::asPlainText($row['task']) ?></td>
 											<?php
 											if ($row['is_done']) {
 												echo "<td>완료됨</td>";
